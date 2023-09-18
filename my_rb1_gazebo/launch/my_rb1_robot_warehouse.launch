@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+    <param name="robot_description" command="cat '$(find my_rb1_description)/urdf/my_rb1_robot.urdf'" />
+    <arg name="x" default="-0.45"/>
+    <arg name="y" default="-1.4"/>
+    <arg name="z" default="0.5"/>
+    <include file="$(find my_rb1_gazebo)/launch/empty_warehouse.launch"/>
+    <node name="rb1_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+          args="-urdf -param robot_description -model rb1_robot -x $(arg x) -y $(arg y) -z $(arg z)" />
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <param name="use_gui" value="false"/>
+    </node>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+</launch>
